@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create Article - TheFlipperEconomics{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4">Create Article</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.title|as_crispy_field }}
+            </div>
+            <div class="mb-3">
+                {{ form.image|as_crispy_field }}
+            </div>
+            <div class="mb-3">
+                {{ form.content|as_crispy_field }}
+            </div>
+            <div class="mb-3">
+                {{ form.published|as_crispy_field }}
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
