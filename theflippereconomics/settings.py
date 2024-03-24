@@ -60,7 +60,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'theflippereconomics.wsgi.application'
+WSGI_APPLICATION = 'Articles.wsgi.application'
 
 
 # Database
