@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-q4up42oko9hwfb2mau8!&@g9oshldl#-3oac!#43)061!q^4nt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['13.51.158.2', 'theflippereconomics.online',]
+ALLOWED_HOSTS = ['16.171.19.112', 'theflippereconomics.online',]
 
 
 # Application definition
