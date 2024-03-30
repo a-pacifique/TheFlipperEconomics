@@ -114,7 +114,7 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/var/www/theflippereconomics/staticfiles'
+STATIC_ROOT = '/home/ubuntu/theflippereconomics/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
