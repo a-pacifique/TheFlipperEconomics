@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.http import HttpResponse
 import hashlib
+from django.db.models import Count
 
 def register(request):
     if request.method == 'POST':
@@ -63,7 +64,14 @@ def view_article(request, article_slug):
     article = get_object_or_404(Article, slug=article_slug, published=True)
     article.views += 1
     article.save()
-    return render(request, 'article_detail.html', {'article': article})
+
+    # Get suggested articles by the same author
+    suggested_articles = Article.objects.filter(author=article.author) \
+                                         .exclude(slug=article_slug) \
+                                         .order_by('-date_written')[:3]
+
+    return render(request, 'article_detail.html', {'article': article, 'suggested_articles': suggested_articles})
+
 
 def search(request):
     query = request.GET.get('q')
