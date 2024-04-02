@@ -13,15 +13,16 @@ class StaticViewSitemap(sitemaps.Sitemap):
     def location(self, item):
         return reverse(item)
 
-class ArticleSitemap(Sitemap):
+class ArticleSitemap(sitemaps.Sitemap):
     changefreq = 'weekly'
     priority = 0.9
 
     def items(self):
-        return Article.objects.filter(published=True)
+        return Article.objects.filter(published=True).order_by('-date_written')[:3]
 
-    def lastmod(self, obj):
-        return obj.date_written.strftime('%Y-%m-%d')
+    def location(self, obj):
+        return reverse('article_detail', args=[obj.slug])
+
 
 
 
