@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    {% for article in articles %}
+    {% for url in urlset %}
         <url>
-            <loc>{{ article.get_absolute_url }}</loc>
-            <lastmod>{{ article.date_written|date:"Y-m-d" }}</lastmod>
-            <changefreq>{{ article.changefreq }}</changefreq>
-            <priority>{{ article.priority }}</priority>
+            <loc>{{ url.location }}</loc>
+            <lastmod>{{ url.lastmod|date:"Y-m-d" }}</lastmod>
+            <changefreq>{{ url.changefreq }}</changefreq>
+            <priority>{{ url.priority }}</priority>
         </url>
     {% endfor %}
 </urlset>
-
