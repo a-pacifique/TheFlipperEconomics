@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
+from django.http import HttpResponse
+import hashlib
 
 def register(request):
     if request.method == 'POST':
@@ -93,8 +95,6 @@ def about(request):
 def privacy(request):
     return render(request, 'privacy.html')
 
-
-
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -111,3 +111,8 @@ def contact(request):
     else:
         form = ContactForm()
     return render(request, 'contact.html', {'form': form})
+
+def ads_txt(request):
+    content = "google.com, pub-1335840781247344, DIRECT, f08c47fec0942fa0"
+    return HttpResponse(content, content_type="text/plain")
+
