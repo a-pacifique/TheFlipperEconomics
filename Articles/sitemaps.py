@@ -20,6 +20,10 @@ class ArticleSitemap(sitemaps.Sitemap):
     def items(self):
         return Article.objects.filter(published=True).order_by('-date_written')[:3]
 
-    def lastmod(self, obj):
-        return obj.date_written
+    def location(self, obj):
+        return reverse('article_detail', args=[obj.slug])
+
+
+
+
 
