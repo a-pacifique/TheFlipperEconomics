@@ -21,7 +21,7 @@ class ArticleSitemap(sitemaps.Sitemap):
         return Article.objects.filter(published=True).order_by('-date_written')[:3]
 
     def location(self, obj):
-        return reverse('article_detail', args=[obj.slug])
+        return reverse('view_article', args=[obj.slug])
 
 
 
