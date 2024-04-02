@@ -8,7 +8,7 @@ class StaticViewSitemap(sitemaps.Sitemap):
     changefreq = 'monthly'
 
     def items(self):
-        return ['home', 'about', 'contact']
+        return ['home', 'about', 'contact', 'search']
 
     def location(self, item):
         return reverse(item)
@@ -18,7 +18,8 @@ class ArticleSitemap(sitemaps.Sitemap):
     priority = 0.9
 
     def items(self):
-        return Article.objects.all()[:3]
+        return Article.objects.filter(published=True).order_by('-date_written')[:3]
 
     def lastmod(self, obj):
-        return obj.pub_date
+        return obj.date_written
+
