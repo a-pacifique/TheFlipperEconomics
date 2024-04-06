@@ -60,6 +60,57 @@ def create_article(request):
         form = ArticleForm()
     return render(request, 'create_article.html', {'form': form})
 
+
+
+@login_required
+def admin_articles(request):
+    articles = Article.objects.all()
+    unpublished_articles = articles.filter(published=False)
+    published_articles = articles.filter(published=True)
+    action = request.GET.get('action')
+    article_id = request.GET.get('article_id')
+
+    if action and article_id:
+        article = get_object_or_404(Article, pk=article_id)
+
+        if action == 'edit' and (article.author == request.user or request.user.is_superuser):
+            if request.method == 'POST':
+                form = ArticleForm(request.POST, request.FILES, instance=article)
+                if form.is_valid():
+                    form.save()
+                    return redirect('admin_articles')
+            else:
+                form = ArticleForm(instance=article)
+            return render(request, 'edit_article.html', {'form': form, 'article': article})
+
+        elif action == 'delete' and (article.author == request.user or request.user.is_superuser):
+            return render(request, 'delete_article.html', {'article': article})
+
+        elif action == 'publish' and (article.author == request.user or request.user.is_superuser):
+            if not article.published:
+                article.published = True
+                article.save()
+                return redirect('admin_articles')
+
+    return render(request, 'admin_articles.html', {
+        'unpublished_articles': unpublished_articles,
+        'published_articles': published_articles
+    })
+
+
+@login_required
+def delete_article(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+
+    if article.author != request.user and not request.user.is_superuser:
+        return redirect('admin_articles')
+
+    if request.method == 'POST':
+        article.delete()
+        return redirect('admin_articles')
+
+    return render(request, 'articles/delete_article.html', {'article': article})
+
 def view_article(request, article_slug):
     article = get_object_or_404(Article, slug=article_slug, published=True)
     article.views += 1
