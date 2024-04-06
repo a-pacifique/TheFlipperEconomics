@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Welcome, {{ request.user.username }}</h2>
+    <a href="{% url 'create_article' %}" class="btn btn-primary">Create Article</a>
+  </div>
+
+  <h3>Unpublished Articles</h3>
+  {% if unpublished_articles %}
+  <ul class="list-group">
+    {% for article in unpublished_articles %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ article.title }} by {{ article.author }}
+      <div>
+        <a href="?action=edit&article_id={{ article.id }}" class="btn btn-primary btn-sm">Edit</a>
+        <form method="post" action="?action=delete&article_id={{ article.id }}" style="display: inline;" class="ms-2">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+        <form method="post" action="?action=publish&article_id={{ article.id }}" style="display: inline;" class="ms-2">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-success btn-sm">Publish</button>
+        </form>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No unpublished articles.</p>
+  {% endif %}
+
+  <h3 class="mt-4">Published Articles</h3>
+  {% if published_articles %}
+  <ul class="list-group">
+    {% for article in published_articles %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ article.title }} by {{ article.author }}
+      <div>
+        <a href="?action=edit&article_id={{ article.id }}" class="btn btn-primary btn-sm">Edit</a>
+        <form method="post" action="?action=delete&article_id={{ article.id }}" style="display: inline;" class="ms-2">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No published articles.</p>
+  {% endif %}
+</div>
+{% endblock %}
