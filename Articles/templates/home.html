@@ -19,6 +19,7 @@
                         <h5 class="card-title"><a href="{% url 'view_article' article.slug %}" class="text-decoration-none">{{ article.title }}</a></h5>
                         <p class="card-text">{{ article.content|truncatechars:200|striptags }}</p>
                         <p class="card-text"><small class="text-muted">{{ article.date_written }} by {{ article.author.get_full_name }}</small></p>
+                        <p class="card-text"><small class="text-muted">{{ article.views }} views</small></p>
                     </div>
                 </div>
             </div>
